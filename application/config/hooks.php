@@ -41,6 +41,11 @@ $hook['display_override'] = array(
 				'path'=>'login',
 				'label'=>'Login',
 				'title'=>'Login'
+			),
+			array(
+				'path'=>'manageAccount',
+				'label'=>'Manage account',
+				'title'=>'Manage account'
 			)
 		)
 );

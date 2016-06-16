@@ -1,1 +1,3 @@
-This is the homepage.
+<?php
+echo $this->calendar->generate();
+?>

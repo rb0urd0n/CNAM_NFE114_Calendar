@@ -6,7 +6,6 @@ class User extends CI_Controller{
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('user_model');
 	}
 	
 	public function index(){
@@ -14,7 +13,6 @@ class User extends CI_Controller{
 	}
 	
 	public function form(){
-		
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 		$this->load->helper('url');
@@ -43,4 +41,71 @@ class User extends CI_Controller{
 		}
 	}
 	
+	public function manage(){
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+		$this->load->helper('url');
+		
+		$this->form_validation->set_rules('firstname', 'Firstname', 'trim|required|min_length[2]|max_length[255]');
+		$this->form_validation->set_rules('lastname', 'Lastname', 'trim|required|min_length[2]|max_length[255]');
+		
+		$user = R::findOne('user', ' email = ? ',array($this->session->userdata('email')));
+		
+		if ($this->form_validation->run() === FALSE)
+		{
+			if(is_null($this->input->post('lastname')))
+			{
+				$data = array(
+					'firstname'=>$user->firstname,
+					'lastname'=>$user->lastname,
+					'email'=>$user->email
+				);
+				$this->title = 'Manage account';
+				$this->load->view('user/manage', $data);
+			}
+			else
+			{
+				$data = array(
+					'firstname'=>$this->input->post('firstname'),
+					'lastname'=>$this->input->post('lastname'),
+					'email'=>$this->input->post('email')
+				);
+				$this->title = 'Manage account';
+				$this->load->view('user/manage', $data);
+			}
+			
+		}
+		else
+		{
+			//Submit
+		}
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
